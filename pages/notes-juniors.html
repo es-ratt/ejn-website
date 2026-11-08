@@ -14,6 +14,8 @@
       position: fixed;
       inset: 0;
       background: rgba(0, 0, 0, 0.55);
+      -webkit-backdrop-filter: blur(6px);
+      backdrop-filter: blur(6px);
       align-items: center;
       justify-content: center;
       z-index: 999;
@@ -22,6 +24,22 @@
 
     .locked-modal-overlay.active {
       display: flex;
+    }
+
+    .locked-modal-overlay.active .locked-modal {
+      animation: lmPop 0.28s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    @keyframes lmPop {
+      from {
+        opacity: 0;
+        transform: translateY(14px) scale(0.96);
+      }
+
+      to {
+        opacity: 1;
+        transform: none;
+      }
     }
 
     .locked-modal {
@@ -83,7 +101,81 @@
       cursor: pointer;
     }
 
-    /* ===== Notes details popup ===== */
+    /* ===== Final panel: semester options (Full Bundle / Individual) ===== */
+    .sem-options {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-top: 4px;
+    }
+
+    .sem-opt {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      width: 100%;
+      padding: 12px 16px;
+      border-radius: var(--radius-sm);
+      border: 1.5px solid transparent;
+      font-family: var(--font-body, inherit);
+      font-size: 0.85rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: background var(--transition), color var(--transition), border-color var(--transition), transform var(--transition);
+    }
+
+    .sem-opt-bundle {
+      background: var(--accent);
+      color: #fff;
+      border-color: var(--accent);
+    }
+
+    .sem-opt-bundle:hover {
+      background: var(--accent2);
+      border-color: var(--accent2);
+      transform: translateY(-1px);
+    }
+
+    .sem-opt-single {
+      background: var(--highlight);
+      color: var(--accent);
+      border-color: rgba(22, 163, 74, 0.3);
+    }
+
+    .sem-opt-single:hover {
+      background: var(--accent);
+      color: #fff;
+      border-color: var(--accent);
+    }
+
+    .sem-chev {
+      font-size: 0.7rem;
+      transition: transform var(--transition);
+    }
+
+    .sem-opt-single.is-open .sem-chev {
+      transform: rotate(180deg);
+    }
+
+    .course-list {
+      display: none;
+      margin-top: 14px;
+      padding-top: 4px;
+      border-top: 1px solid var(--border);
+    }
+
+    .course-list.open {
+      display: block;
+      animation: fadeIn 0.25s ease;
+    }
+
+    /* Hidden data list: courses that are in the bundle for free resources only */
+    .bundle-extra {
+      display: none;
+    }
+
+    /* ===== Notes details popup (shared by individual + bundle popups) ===== */
     .nd-overlay {
       position: fixed;
       inset: 0;
@@ -208,6 +300,10 @@
       color: var(--text-muted);
     }
 
+    .nd-section p+p {
+      margin-top: 8px;
+    }
+
     .nd-hl {
       font-weight: 700;
       color: var(--accent2);
@@ -269,6 +365,75 @@
       color: var(--text-main);
     }
 
+    /* Bundle popup: list of courses in the bundle */
+    .bn-group+.bn-group {
+      margin-top: 18px;
+    }
+
+    .bn-group-title {
+      margin: 12px 0 0;
+      font-size: 0.82rem;
+      font-weight: 700;
+      color: var(--text-main);
+    }
+
+    .bn-group-note {
+      margin: 6px 0 0;
+      font-size: 0.82rem;
+      line-height: 1.55;
+      color: var(--text-muted);
+    }
+
+    .bn-courses {
+      list-style: none;
+      margin: 10px 0 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .bn-courses li {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: baseline;
+      gap: 6px 10px;
+      padding: 10px 14px;
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      font-size: 0.86rem;
+      line-height: 1.5;
+      color: var(--text-main);
+    }
+
+    .bn-code {
+      flex-shrink: 0;
+      font-size: 0.78rem;
+      font-weight: 800;
+      color: var(--accent);
+    }
+
+    /* Resources-only courses */
+    .bn-courses-res li {
+      background: var(--surface);
+      border-style: dashed;
+      border-color: rgba(22, 163, 74, 0.45);
+    }
+
+    .bn-res-tag {
+      margin-left: auto;
+      font-size: 0.66rem;
+      font-weight: 800;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      color: var(--accent2);
+      background: var(--highlight2);
+      border-radius: 100px;
+      padding: 2px 9px;
+      white-space: nowrap;
+    }
+
     .nd-free {
       margin-top: 14px;
       padding: 14px 16px;
@@ -299,7 +464,7 @@
       border-radius: 0 0 22px 22px;
     }
 
-    /* Purchase This Course: link styled as a prominent button */
+    /* Purchase button: link styled as a prominent button */
     .nd-buy {
       display: block;
       box-sizing: border-box;
@@ -371,6 +536,11 @@
       .nd-overlay,
       .nd-modal {
         transition: none;
+      }
+
+      .locked-modal-overlay.active .locked-modal,
+      .course-list.open {
+        animation: none;
       }
     }
   </style>
@@ -605,7 +775,7 @@
     </div>
     ============ END OLD MID PANEL ============ -->
 
-    <!-- ============ MID PANEL ============ -->
+    <!-- ============ PREVIOUS MID PANEL ("Not Available" version, disabled) ============
     <div class="semester-panel" id="panel-mid">
 
       <div class="info-box">
@@ -615,7 +785,7 @@
 
       <div class="semester-grid">
 
-        <!-- Semester 1 -->
+        [Semester 1]
         <div class="semester-card">
           <div class="semester-card-title">1st Semester</div>
           <span class="semester-card-tag">3 courses available</span>
@@ -638,7 +808,7 @@
             begins</span>
         </div>
 
-        <!-- Semester 2 -->
+        [Semester 2]
         <div class="semester-card">
           <div class="semester-card-title">2nd Semester</div>
           <span class="semester-card-tag">2 courses available</span>
@@ -658,7 +828,7 @@
             begins</span>
         </div>
 
-        <!-- Semester 3 -->
+        [Semester 3]
         <div class="semester-card">
           <div class="semester-card-title">3rd Semester</div>
           <span class="semester-card-tag">4 courses available</span>
@@ -686,7 +856,7 @@
             begins</span>
         </div>
 
-        <!-- Semester 4 -->
+        [Semester 4]
         <div class="semester-card">
           <div class="semester-card-title">4th Semester</div>
           <span class="semester-card-tag">4 courses available</span>
@@ -713,7 +883,7 @@
             begins</span>
         </div>
 
-        <!-- Semester 5 -->
+        [Semester 5]
         <div class="semester-card">
           <div class="semester-card-title">5th Semester</div>
           <span class="semester-card-tag">3 courses available</span>
@@ -736,7 +906,7 @@
             begins</span>
         </div>
 
-        <!-- Semester 6 -->
+        [Semester 6]
         <div class="semester-card">
           <div class="semester-card-title">6th Semester</div>
           <span class="semester-card-tag">4 courses available</span>
@@ -765,7 +935,7 @@
             begins</span>
         </div>
 
-        <!-- Semester 7-12 — coming soon -->
+        [Semester 7-12: coming soon]
         <div class="semester-card coming-soon">
           <div class="semester-card-title">7th – 12th Semester</div>
           <span class="semester-card-tag soon">Coming soon</span>
@@ -775,13 +945,16 @@
 
       </div>
     </div>
+    ============ END PREVIOUS MID PANEL ============ -->
+
+    <!-- Mid Notes: no panel any more. Clicking the Mid card opens the "Not available for Fall-26 semester" popup. -->
 
     <!-- ============ FINAL PANEL ============ -->
     <div class="semester-panel" id="panel-final">
 
       <div class="info-box">
-        You're viewing <strong>Final-term notes</strong>. Pick a course and tap <strong>See Notes Details</strong> to
-        check what's included before you purchase it.
+        You're viewing <strong>Final-term notes</strong>. For each semester, pick the <strong>Full Bundle</strong> or
+        open the <strong>Individual Course Notes</strong>.
       </div>
 
       <div class="semester-grid">
@@ -791,27 +964,36 @@
           <div class="semester-card-title">1st Semester</div>
           <span class="semester-card-tag">4 courses available</span>
 
-          <div class="course-item">
-            <span class="course-name"><span class="course-code">SE-111</span> — Computer Fundamentals</span>
-            <button type="button" class="course-buy-btn notes-details-btn" data-code="SE-111"
-              data-name="Computer Fundamentals">See Notes Details</button>
+          <div class="sem-options">
+            <button type="button" class="sem-opt sem-opt-bundle bundle-btn">Full Bundle of Notes</button>
+            <button type="button" class="sem-opt sem-opt-single toggle-courses-btn" aria-expanded="false">Individual
+              Course Notes <span class="sem-chev">▼</span></button>
           </div>
-          <div class="course-item">
-            <span class="course-name"><span class="course-code">SE-113</span> — Introduction to Software
-              Engineering</span>
-            <button type="button" class="course-buy-btn notes-details-btn" data-code="SE-113"
-              data-name="Introduction to Software Engineering">See Notes Details</button>
-          </div>
-          <div class="course-item">
-            <span class="course-name"><span class="course-code">ENG-101</span> — English Reading, Writing Skills &amp;
-              Public Speaking</span>
-            <button type="button" class="course-buy-btn notes-details-btn" data-code="ENG-101"
-              data-name="English Reading, Writing Skills &amp; Public Speaking">See Notes Details</button>
-          </div>
-          <div class="course-item">
-            <span class="course-name"><span class="course-code">BNS-101</span> — Bangladesh Studies</span>
-            <button type="button" class="course-buy-btn notes-details-btn" data-code="BNS-101"
-              data-name="Bangladesh Studies">See Notes Details</button>
+
+          <div class="course-list">
+            <div class="course-item">
+              <span class="course-name"><span class="course-code">SE-111</span> — Computer Fundamentals</span>
+              <button type="button" class="course-buy-btn notes-details-btn" data-code="SE-111"
+                data-name="Computer Fundamentals">See Notes Details</button>
+            </div>
+            <div class="course-item">
+              <span class="course-name"><span class="course-code">SE-113</span> — Introduction to Software
+                Engineering</span>
+              <button type="button" class="course-buy-btn notes-details-btn" data-code="SE-113"
+                data-name="Introduction to Software Engineering">See Notes Details</button>
+            </div>
+            <div class="course-item">
+              <span class="course-name"><span class="course-code">ENG-101</span> — English Reading, Writing Skills
+                &amp;
+                Public Speaking</span>
+              <button type="button" class="course-buy-btn notes-details-btn" data-code="ENG-101"
+                data-name="English Reading, Writing Skills &amp; Public Speaking">See Notes Details</button>
+            </div>
+            <div class="course-item">
+              <span class="course-name"><span class="course-code">BNS-101</span> — Bangladesh Studies</span>
+              <button type="button" class="course-buy-btn notes-details-btn" data-code="BNS-101"
+                data-name="Bangladesh Studies">See Notes Details</button>
+            </div>
           </div>
         </div>
 
@@ -820,24 +1002,39 @@
           <div class="semester-card-title">2nd Semester</div>
           <span class="semester-card-tag">2 courses available</span>
 
-          <div class="course-item">
-            <span class="course-name"><span class="course-code">MAT-101</span> — Math-I: Calculus &amp; Geometry</span>
-            <button type="button" class="course-buy-btn notes-details-btn" data-code="MAT-101"
-              data-name="Math-I: Calculus &amp; Geometry">See Notes Details</button>
+          <div class="sem-options">
+            <button type="button" class="sem-opt sem-opt-bundle bundle-btn">Full Bundle of Notes</button>
+            <button type="button" class="sem-opt sem-opt-single toggle-courses-btn" aria-expanded="false">Individual
+              Course Notes <span class="sem-chev">▼</span></button>
           </div>
-          <!--
-          <div class="course-item">
-            <span class="course-name"><span class="course-code">SE-121</span> — Structured Programming</span>
-            <button type="button" class="course-buy-btn notes-details-btn" data-code="SE-121"
-              data-name="Structured Programming">See Notes Details</button>
-          </div> 
-          -->
-          <div class="course-item">
-            <span class="course-name"><span class="course-code">PHY-101</span> — Physics: Mechanics, Electromagnetism
-              &amp; Waves</span>
-            <button type="button" class="course-buy-btn notes-details-btn" data-code="PHY-101"
-              data-name="Physics: Mechanics, Electromagnetism &amp; Waves">See Notes Details</button>
+
+          <div class="course-list">
+            <div class="course-item">
+              <span class="course-name"><span class="course-code">MAT-101</span> — Math-I: Calculus &amp;
+                Geometry</span>
+              <button type="button" class="course-buy-btn notes-details-btn" data-code="MAT-101"
+                data-name="Math-I: Calculus &amp; Geometry">See Notes Details</button>
+            </div>
+            <!--
+            <div class="course-item">
+              <span class="course-name"><span class="course-code">SE-121</span> — Structured Programming</span>
+              <button type="button" class="course-buy-btn notes-details-btn" data-code="SE-121"
+                data-name="Structured Programming">See Notes Details</button>
+            </div> 
+            -->
+            <div class="course-item">
+              <span class="course-name"><span class="course-code">PHY-101</span> — Physics: Mechanics,
+                Electromagnetism
+                &amp; Waves</span>
+              <button type="button" class="course-buy-btn notes-details-btn" data-code="PHY-101"
+                data-name="Physics: Mechanics, Electromagnetism &amp; Waves">See Notes Details</button>
+            </div>
           </div>
+
+          <!-- Bundle only: free resources, no existing notes yet -->
+          <ul class="bundle-extra" hidden>
+            <li data-code="SE-121" data-name="Structured Programming"></li>
+          </ul>
         </div>
 
         <!-- Semester 3 -->
@@ -845,59 +1042,87 @@
           <div class="semester-card-title">3rd Semester</div>
           <span class="semester-card-tag">3 courses available</span>
 
-          <!-- <div class="course-item">
-            <span class="course-name"><span class="course-code">SE-213</span> — Digital Electronics &amp; Logic
-              Design</span>
-            <button type="button" class="course-buy-btn notes-details-btn" data-code="SE-213"
-              data-name="Digital Electronics &amp; Logic Design">See Notes Details</button>
-          </div> -->
-          <div class="course-item">
-            <span class="course-name"><span class="course-code">SE-123</span> — Discrete Mathematics</span>
-            <button type="button" class="course-buy-btn notes-details-btn" data-code="SE-123"
-              data-name="Discrete Mathematics">See Notes Details</button>
+          <div class="sem-options">
+            <button type="button" class="sem-opt sem-opt-bundle bundle-btn">Full Bundle of Notes</button>
+            <button type="button" class="sem-opt sem-opt-single toggle-courses-btn" aria-expanded="false">Individual
+              Course Notes <span class="sem-chev">▼</span></button>
           </div>
-          <div class="course-item">
-            <span class="course-name"><span class="course-code">MAT-102</span> — Math-II: Linear Algebra &amp; Fourier
-              Analysis</span>
-            <button type="button" class="course-buy-btn notes-details-btn" data-code="MAT-102"
-              data-name="Math-II: Linear Algebra &amp; Fourier Analysis">See Notes Details</button>
+
+          <div class="course-list">
+            <!-- <div class="course-item">
+              <span class="course-name"><span class="course-code">SE-213</span> — Digital Electronics &amp; Logic
+                Design</span>
+              <button type="button" class="course-buy-btn notes-details-btn" data-code="SE-213"
+                data-name="Digital Electronics &amp; Logic Design">See Notes Details</button>
+            </div> -->
+            <div class="course-item">
+              <span class="course-name"><span class="course-code">SE-123</span> — Discrete Mathematics</span>
+              <button type="button" class="course-buy-btn notes-details-btn" data-code="SE-123"
+                data-name="Discrete Mathematics">See Notes Details</button>
+            </div>
+            <div class="course-item">
+              <span class="course-name"><span class="course-code">MAT-102</span> — Math-II: Linear Algebra &amp;
+                Fourier
+                Analysis</span>
+              <button type="button" class="course-buy-btn notes-details-btn" data-code="MAT-102"
+                data-name="Math-II: Linear Algebra &amp; Fourier Analysis">See Notes Details</button>
+            </div>
+            <div class="course-item">
+              <span class="course-name"><span class="course-code">SE-131</span> — Data Structure</span>
+              <button type="button" class="course-buy-btn notes-details-btn" data-code="SE-131"
+                data-name="Data Structure">See Notes Details</button>
+            </div>
           </div>
-          <div class="course-item">
-            <span class="course-name"><span class="course-code">SE-131</span> — Data Structure</span>
-            <button type="button" class="course-buy-btn notes-details-btn" data-code="SE-131"
-              data-name="Data Structure">See Notes Details</button>
-          </div>
+
+          <!-- Bundle only: free resources, no existing notes yet -->
+          <ul class="bundle-extra" hidden>
+            <li data-code="SE-213" data-name="Digital Electronics &amp; Logic Design"></li>
+          </ul>
         </div>
 
         <!-- Semester 4 -->
         <div class="semester-card">
           <div class="semester-card-title">4th Semester</div>
-          <span class="semester-card-tag">3 courses available</span>
+          <span class="semester-card-tag">2 courses available</span>
 
-          <!--
-          <div class="course-item">
-            <span class="course-name"><span class="course-code">SE-133</span> — Software Development Capstone
-              Project</span>
-            <button type="button" class="course-buy-btn notes-details-btn" data-code="SE-133"
-              data-name="Software Development Capstone Project">See Notes Details</button>
+          <div class="sem-options">
+            <button type="button" class="sem-opt sem-opt-bundle bundle-btn">Full Bundle of Notes</button>
+            <button type="button" class="sem-opt sem-opt-single toggle-courses-btn" aria-expanded="false">Individual
+              Course Notes <span class="sem-chev">▼</span></button>
           </div>
-          
-          <div class="course-item">
-            <span class="course-name"><span class="course-code">SE-223</span> — Database Systems</span>
-            <button type="button" class="course-buy-btn notes-details-btn" data-code="SE-223"
-              data-name="Database Systems">See Notes Details</button>
+
+          <div class="course-list">
+            <!--
+            <div class="course-item">
+              <span class="course-name"><span class="course-code">SE-133</span> — Software Development Capstone
+                Project</span>
+              <button type="button" class="course-buy-btn notes-details-btn" data-code="SE-133"
+                data-name="Software Development Capstone Project">See Notes Details</button>
+            </div>
+            
+            <div class="course-item">
+              <span class="course-name"><span class="course-code">SE-223</span> — Database Systems</span>
+              <button type="button" class="course-buy-btn notes-details-btn" data-code="SE-223"
+                data-name="Database Systems">See Notes Details</button>
+            </div>
+            -->
+            <div class="course-item">
+              <span class="course-name"><span class="course-code">SE-222</span> — Computer Architecture</span>
+              <button type="button" class="course-buy-btn notes-details-btn" data-code="SE-222"
+                data-name="Computer Architecture">See Notes Details</button>
+            </div>
+            <div class="course-item">
+              <span class="course-name"><span class="course-code">AOL-101</span> — Art of Living</span>
+              <button type="button" class="course-buy-btn notes-details-btn" data-code="AOL-101"
+                data-name="Art of Living">See Notes Details</button>
+            </div>
           </div>
-          -->
-          <div class="course-item">
-            <span class="course-name"><span class="course-code">SE-222</span> — Computer Architecture</span>
-            <button type="button" class="course-buy-btn notes-details-btn" data-code="SE-222"
-              data-name="Computer Architecture">See Notes Details</button>
-          </div>
-          <div class="course-item">
-            <span class="course-name"><span class="course-code">AOL-101</span> — Art of Living</span>
-            <button type="button" class="course-buy-btn notes-details-btn" data-code="AOL-101"
-              data-name="Art of Living">See Notes Details</button>
-          </div>
+
+          <!-- Bundle only: free resources, no existing notes yet -->
+          <ul class="bundle-extra" hidden>
+            <li data-code="SE-133" data-name="Software Development Capstone Project"></li>
+            <li data-code="SE-223" data-name="Database Systems"></li>
+          </ul>
         </div>
 
         <!-- Semester 5 -->
@@ -905,21 +1130,31 @@
           <div class="semester-card-title">5th Semester</div>
           <span class="semester-card-tag">3 courses available</span>
 
-          <div class="course-item">
-            <span class="course-name"><span class="course-code">STA-135 / STA-101</span> — Probability &amp; Statistics
-              in Software Engineering</span>
-            <button type="button" class="course-buy-btn notes-details-btn" data-code="STA-135 / STA-101"
-              data-name="Probability &amp; Statistics in Software Engineering">See Notes Details</button>
+          <div class="sem-options">
+            <button type="button" class="sem-opt sem-opt-bundle bundle-btn">Full Bundle of Notes</button>
+            <button type="button" class="sem-opt sem-opt-single toggle-courses-btn" aria-expanded="false">Individual
+              Course Notes <span class="sem-chev">▼</span></button>
           </div>
-          <div class="course-item">
-            <span class="course-name"><span class="course-code">SE-214</span> — Algorithms Design &amp; Analysis</span>
-            <button type="button" class="course-buy-btn notes-details-btn" data-code="SE-214"
-              data-name="Algorithms Design &amp; Analysis">See Notes Details</button>
-          </div>
-          <div class="course-item">
-            <span class="course-name"><span class="course-code">SE-216</span> — Object Oriented Programming</span>
-            <button type="button" class="course-buy-btn notes-details-btn" data-code="SE-216"
-              data-name="Object Oriented Programming">See Notes Details</button>
+
+          <div class="course-list">
+            <div class="course-item">
+              <span class="course-name"><span class="course-code">STA-135 / STA-101</span> — Probability &amp;
+                Statistics
+                in Software Engineering</span>
+              <button type="button" class="course-buy-btn notes-details-btn" data-code="STA-135 / STA-101"
+                data-name="Probability &amp; Statistics in Software Engineering">See Notes Details</button>
+            </div>
+            <div class="course-item">
+              <span class="course-name"><span class="course-code">SE-214</span> — Algorithms Design &amp;
+                Analysis</span>
+              <button type="button" class="course-buy-btn notes-details-btn" data-code="SE-214"
+                data-name="Algorithms Design &amp; Analysis">See Notes Details</button>
+            </div>
+            <div class="course-item">
+              <span class="course-name"><span class="course-code">SE-216</span> — Object Oriented Programming</span>
+              <button type="button" class="course-buy-btn notes-details-btn" data-code="SE-216"
+                data-name="Object Oriented Programming">See Notes Details</button>
+            </div>
           </div>
         </div>
 
@@ -928,31 +1163,46 @@
           <div class="semester-card-title">6th Semester</div>
           <span class="semester-card-tag">3 courses available</span>
 
-          <div class="course-item">
-            <span class="course-name"><span class="course-code">STA-135 / STA-101</span> — Probability &amp; Statistics
-              in Software Engineering</span>
-            <button type="button" class="course-buy-btn notes-details-btn" data-code="STA-135 / STA-101"
-              data-name="Probability &amp; Statistics in Software Engineering">See Notes Details</button>
+          <div class="sem-options">
+            <button type="button" class="sem-opt sem-opt-bundle bundle-btn">Full Bundle of Notes</button>
+            <button type="button" class="sem-opt sem-opt-single toggle-courses-btn" aria-expanded="false">Individual
+              Course Notes <span class="sem-chev">▼</span></button>
           </div>
-          <div class="course-item">
-            <span class="course-name"><span class="course-code">SE-232</span> — Operating System &amp; System
-              Programming</span>
-            <button type="button" class="course-buy-btn notes-details-btn" data-code="SE-232"
-              data-name="Operating System &amp; System Programming">See Notes Details</button>
+
+          <div class="course-list">
+            <div class="course-item">
+              <span class="course-name"><span class="course-code">STA-135 / STA-101</span> — Probability &amp;
+                Statistics
+                in Software Engineering</span>
+              <button type="button" class="course-buy-btn notes-details-btn" data-code="STA-135 / STA-101"
+                data-name="Probability &amp; Statistics in Software Engineering">See Notes Details</button>
+            </div>
+            <div class="course-item">
+              <span class="course-name"><span class="course-code">SE-232</span> — Operating System &amp; System
+                Programming</span>
+              <button type="button" class="course-buy-btn notes-details-btn" data-code="SE-232"
+                data-name="Operating System &amp; System Programming">See Notes Details</button>
+            </div>
+            <!--
+            <div class="course-item">
+              <span class="course-name"><span class="course-code">SE-231</span> — System Analysis &amp; Design Capstone
+                Project</span>
+              <button type="button" class="course-buy-btn notes-details-btn" data-code="SE-231"
+                data-name="System Analysis &amp; Design Capstone Project">See Notes Details</button>
+            </div>
+            -->
+            <div class="course-item">
+              <span class="course-name"><span class="course-code">SE-235</span> — Desktop &amp; Web
+                Programming</span>
+              <button type="button" class="course-buy-btn notes-details-btn" data-code="SE-235"
+                data-name="Desktop &amp; Web Programming">See Notes Details</button>
+            </div>
           </div>
-          <!--
-          <div class="course-item">
-            <span class="course-name"><span class="course-code">SE-231</span> — System Analysis &amp; Design Capstone
-              Project</span>
-            <button type="button" class="course-buy-btn notes-details-btn" data-code="SE-231"
-              data-name="System Analysis &amp; Design Capstone Project">See Notes Details</button>
-          </div>
-          -->
-          <div class="course-item">
-            <span class="course-name"><span class="course-code">SE-235</span> — Desktop &amp; Web Programming</span>
-            <button type="button" class="course-buy-btn notes-details-btn" data-code="SE-235"
-              data-name="Desktop &amp; Web Programming">See Notes Details</button>
-          </div>
+
+          <!-- Bundle only: free resources, no existing notes yet -->
+          <ul class="bundle-extra" hidden>
+            <li data-code="SE-231" data-name="System Analysis &amp; Design Capstone Project"></li>
+          </ul>
         </div>
 
         <!-- Semester 7-12 — coming soon -->
@@ -1025,7 +1275,7 @@
 
   </main>
 
-  <!-- Notes details popup (Final panel) -->
+  <!-- Notes details popup (individual course) -->
   <div class="nd-overlay" id="notesDetailsOverlay" aria-hidden="true">
     <div class="nd-modal" role="dialog" aria-modal="true" aria-labelledby="ndTitle">
       <button type="button" class="nd-close" id="ndClose" aria-label="Close notes details">&times;</button>
@@ -1074,11 +1324,83 @@
     </div>
   </div>
 
-  <!-- Locked notice modal (kept for reference, no longer used by the Final panel) -->
+  <!-- Full bundle popup (whole semester) -->
+  <div class="nd-overlay" id="bundleOverlay" aria-hidden="true">
+    <div class="nd-modal" role="dialog" aria-modal="true" aria-labelledby="bnTitle">
+      <button type="button" class="nd-close" id="bnClose" aria-label="Close bundle details">&times;</button>
+
+      <div class="nd-head">
+        <span class="nd-code" id="bnSem"></span>
+        <h2 class="nd-title" id="bnTitle">Full Bundle of Notes</h2>
+      </div>
+
+      <div class="nd-body">
+        <section class="nd-section">
+          <h3>Courses in This Bundle <span class="nd-badge" id="bnCount"></span></h3>
+
+          <!-- Courses that already have notes -->
+          <div class="bn-group" id="bnNotesGroup">
+            <p class="bn-group-title"><span class="nd-hl">Existing notes + 4 free resources</span></p>
+            <ul class="bn-courses" id="bnCourses"></ul>
+          </div>
+
+          <!-- Courses with free resources only -->
+          <div class="bn-group" id="bnResGroup">
+            <p class="bn-group-title"><span class="nd-hl">Free resources only</span></p>
+            <p class="bn-group-note">Existing notes are not available for these courses yet. For each of them, you'll
+              receive <strong>only the 4 free additional resources</strong>, uploaded to your Google Drive by the end of
+              December 2026.</p>
+            <ul class="bn-courses bn-courses-res" id="bnResCourses"></ul>
+          </div>
+        </section>
+
+        <section class="nd-section">
+          <h3>What's Included with the Full Bundle?</h3>
+          <p>When you purchase this bundle, you'll get <span class="nd-hl">immediate access</span> to the existing
+            notes for <span class="nd-hl" id="bnAll"></span>, prepared from my own learning experience.</p>
+          <p id="bnResLine">For <span class="nd-hl" id="bnResCount"></span> marked <span class="nd-hl">Resources
+              only</span>, there are no existing notes yet, so you'll receive just the free additional resources
+            listed below.</p>
+        </section>
+
+        <section class="nd-section">
+          <h3>Additional Resources <span class="nd-badge">Coming by December 2026</span></h3>
+          <p>For <span class="nd-hl">every course</span> in the bundle, you'll also receive <span class="nd-hl">4
+              additional resources</span> at <span class="nd-hl">no extra cost</span>:</p>
+
+          <ol class="nd-list">
+            <li><strong>Final Exam Topics</strong>A focused list of topics to prepare for the final exam.</li>
+            <li><strong>Notes Coverage</strong>A clear overview of what is covered and what is not included in the
+              notes.</li>
+            <li><strong>Previous Semester Question Analysis</strong>An analysis of questions from previous semesters.
+            </li>
+            <li><strong>Visual Topic Analysis</strong>A visual breakdown of important and less important topics based
+              on previous semester questions.</li>
+          </ol>
+
+          <div class="nd-free">
+            All 4 additional resources for <strong id="bnTotal"></strong> in this bundle are included
+            <span class="nd-chip">FREE</span> with your bundle purchase. They will be uploaded to your
+            <span class="nd-hl">Google Drive</span> by the end of <span class="nd-hl">December 2026</span>.
+          </div>
+        </section>
+      </div>
+
+      <div class="nd-foot">
+        <!-- Full bundle purchase form -->
+        <a class="nd-buy" id="bnBuy"
+          href="https://docs.google.com/forms/d/e/1FAIpQLSfMmezJRZ8htfsB5WdRQ9oR6rVFg1caMa6qmoMFjAJSFPU2wQ/viewform?usp=publish-editor"
+          target="_blank" rel="noopener noreferrer">Purchase Full Bundle</a>
+        <p class="nd-foot-note">You are purchasing the full bundle for <strong id="bnBuyName"></strong>.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Mid Notes popup -->
   <div class="locked-modal-overlay" id="lockedModalOverlay">
     <div class="locked-modal">
-      <div class="locked-modal-icon">⏳</div>
-      <p class="locked-modal-title">Come again after mid.</p>
+      <div class="locked-modal-icon">🔒</div>
+      <p class="locked-modal-title">Not available for Fall-26 semester.</p>
       <p class="locked-modal-sub">Thank you 🙏</p>
       <button class="locked-modal-close" id="lockedModalClose">OK</button>
     </div>
@@ -1094,11 +1416,16 @@
 
   <script src="../script.js"></script>
 
-  <!-- Mid / Final toggle logic -->
+  <!-- Mid / Final choice: Mid opens the popup, Final shows the semester panel -->
   <script>
     document.querySelectorAll('.term-choice-card').forEach(function (card) {
       card.addEventListener('click', function () {
         var term = card.dataset.term;
+
+        if (term === 'mid') {
+          document.getElementById('lockedModalOverlay').classList.add('active');
+          return;
+        }
 
         document.querySelectorAll('.term-choice-card').forEach(function (c) {
           c.classList.remove('active');
@@ -1132,7 +1459,7 @@
     });
   </script>
 
-  <!-- Locked modal logic (only runs for elements with the .locked-note class) -->
+  <!-- Locked modal logic (Mid popup close + any element with the .locked-note class) -->
   <script>
     // capture phase (true) = runs BEFORE any click handler script.js may have
     // attached, and stopImmediatePropagation blocks script.js's handler afterwards.
@@ -1153,55 +1480,158 @@
     });
   </script>
 
-  <!-- Notes details popup logic -->
+  <!-- Final panel: individual-course list toggle + details popup + bundle popup -->
   <script>
     (function () {
-      var overlay = document.getElementById('notesDetailsOverlay');
-      // move the popup to <html> so no animation or transform on <body> can offset it
-      document.documentElement.appendChild(overlay);
-      var modal = overlay.querySelector('.nd-modal');
-      var closeBtn = document.getElementById('ndClose');
-      var codeEl = document.getElementById('ndCode');
-      var titleEl = document.getElementById('ndTitle');
-      var buyNameEl = document.getElementById('ndBuyName');
+      var root = document.documentElement;
+      var detailsOverlay = document.getElementById('notesDetailsOverlay');
+      var bundleOverlay = document.getElementById('bundleOverlay');
       var lockedOverlay = document.getElementById('lockedModalOverlay');
+
+      // move popups to <html> so no animation or transform on <body> can offset them
+      root.appendChild(detailsOverlay);
+      root.appendChild(bundleOverlay);
+      root.appendChild(lockedOverlay);
+
       var lastTrigger = null;
 
-      function openDetails(btn) {
-        lastTrigger = btn;
-        codeEl.textContent = btn.dataset.code;
-        titleEl.textContent = btn.dataset.name;
-        buyNameEl.textContent = btn.dataset.code + ' — ' + btn.dataset.name;
-        modal.querySelector('.nd-body').scrollTop = 0;
-        overlay.classList.add('open');
-        overlay.setAttribute('aria-hidden', 'false');
-        document.body.style.overflow = 'hidden';
-        closeBtn.focus();
+      function plural(n) {
+        return n + (n === 1 ? ' course' : ' courses');
       }
 
-      function closeDetails() {
-        overlay.classList.remove('open');
-        overlay.setAttribute('aria-hidden', 'true');
+      function openOverlay(o) {
+        o.classList.add('open');
+        o.setAttribute('aria-hidden', 'false');
+        document.body.style.overflow = 'hidden';
+      }
+
+      function closeOverlay(o) {
+        o.classList.remove('open');
+        o.setAttribute('aria-hidden', 'true');
         document.body.style.overflow = '';
         if (lastTrigger) lastTrigger.focus();
       }
 
+      /* ---------- Individual Course Notes: expand / collapse ---------- */
+      document.querySelectorAll('.toggle-courses-btn').forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          var list = btn.closest('.semester-card').querySelector('.course-list');
+          var open = list.classList.toggle('open');
+          btn.classList.toggle('is-open', open);
+          btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+        });
+      });
+
+      /* ---------- Individual course details popup ---------- */
+      var ndClose = document.getElementById('ndClose');
+      var ndCode = document.getElementById('ndCode');
+      var ndTitle = document.getElementById('ndTitle');
+      var ndBuyName = document.getElementById('ndBuyName');
+
       document.querySelectorAll('.notes-details-btn').forEach(function (btn) {
-        btn.addEventListener('click', function () { openDetails(btn); });
+        btn.addEventListener('click', function () {
+          lastTrigger = btn;
+          ndCode.textContent = btn.dataset.code;
+          ndTitle.textContent = btn.dataset.name;
+          ndBuyName.textContent = btn.dataset.code + ' — ' + btn.dataset.name;
+          detailsOverlay.querySelector('.nd-body').scrollTop = 0;
+          openOverlay(detailsOverlay);
+          ndClose.focus();
+        });
       });
 
-      closeBtn.addEventListener('click', closeDetails);
-
-      overlay.addEventListener('click', function (e) {
-        if (e.target === overlay) closeDetails();
+      ndClose.addEventListener('click', function () { closeOverlay(detailsOverlay); });
+      detailsOverlay.addEventListener('click', function (e) {
+        if (e.target === detailsOverlay) closeOverlay(detailsOverlay);
       });
 
+      /* ---------- Full bundle popup ---------- */
+      var bnClose = document.getElementById('bnClose');
+      var bnSem = document.getElementById('bnSem');
+      var bnCount = document.getElementById('bnCount');
+      var bnCourses = document.getElementById('bnCourses');
+      var bnResGroup = document.getElementById('bnResGroup');
+      var bnResCourses = document.getElementById('bnResCourses');
+      var bnAll = document.getElementById('bnAll');
+      var bnResLine = document.getElementById('bnResLine');
+      var bnResCount = document.getElementById('bnResCount');
+      var bnTotal = document.getElementById('bnTotal');
+      var bnBuyName = document.getElementById('bnBuyName');
+
+      function addCourse(ul, code, name, resOnly) {
+        var li = document.createElement('li');
+        var c = document.createElement('span');
+        c.className = 'bn-code';
+        c.textContent = code;
+        var n = document.createElement('span');
+        n.textContent = name;
+        li.appendChild(c);
+        li.appendChild(n);
+        if (resOnly) {
+          var tag = document.createElement('span');
+          tag.className = 'bn-res-tag';
+          tag.textContent = 'Resources only';
+          li.appendChild(tag);
+        }
+        ul.appendChild(li);
+      }
+
+      document.querySelectorAll('.bundle-btn').forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          lastTrigger = btn;
+          var card = btn.closest('.semester-card');
+          var sem = card.querySelector('.semester-card-title').textContent.trim();
+
+          // courses that have notes (commented-out ones are ignored automatically)
+          var withNotes = card.querySelectorAll('.notes-details-btn');
+          // courses in the bundle for free resources only
+          var resOnly = card.querySelectorAll('.bundle-extra li');
+
+          var n = withNotes.length;
+          var m = resOnly.length;
+          var total = n + m;
+
+          bnCourses.innerHTML = '';
+          withNotes.forEach(function (c) {
+            addCourse(bnCourses, c.dataset.code, c.dataset.name, false);
+          });
+
+          bnResCourses.innerHTML = '';
+          resOnly.forEach(function (c) {
+            addCourse(bnResCourses, c.dataset.code, c.dataset.name, true);
+          });
+
+          // show the "free resources only" parts only when this semester has such courses
+          bnResGroup.style.display = m ? '' : 'none';
+          bnResLine.style.display = m ? '' : 'none';
+
+          bnSem.textContent = sem;
+          bnCount.textContent = plural(total);
+          bnAll.textContent = n === 1 ? 'the course' : 'all ' + n + ' courses';
+          bnResCount.textContent = m === 1 ? 'the 1 course' : 'the ' + m + ' courses';
+          bnTotal.textContent = total === 1 ? 'the course' : 'all ' + total + ' courses';
+          bnBuyName.textContent = sem + ' (' + plural(total) + ')';
+
+          bundleOverlay.querySelector('.nd-body').scrollTop = 0;
+          openOverlay(bundleOverlay);
+          bnClose.focus();
+        });
+      });
+
+      bnClose.addEventListener('click', function () { closeOverlay(bundleOverlay); });
+      bundleOverlay.addEventListener('click', function (e) {
+        if (e.target === bundleOverlay) closeOverlay(bundleOverlay);
+      });
+
+      /* ---------- Esc closes whichever popup is open ---------- */
       document.addEventListener('keydown', function (e) {
         if (e.key !== 'Escape') return;
         if (lockedOverlay.classList.contains('active')) {
           lockedOverlay.classList.remove('active');
-        } else if (overlay.classList.contains('open')) {
-          closeDetails();
+        } else if (bundleOverlay.classList.contains('open')) {
+          closeOverlay(bundleOverlay);
+        } else if (detailsOverlay.classList.contains('open')) {
+          closeOverlay(detailsOverlay);
         }
       });
     })();
