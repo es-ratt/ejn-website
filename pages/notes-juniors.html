@@ -504,7 +504,81 @@
       font-weight: 700;
     }
 
+    /* Course details popup (৳45 offer) */
+    .co-list {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+
+    .co-list li {
+      position: relative;
+      padding: 12px 14px 12px 42px;
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      font-size: 0.88rem;
+      line-height: 1.55;
+      color: var(--text-main);
+    }
+
+    .co-list li::before {
+      content: "✓";
+      position: absolute;
+      left: 14px;
+      top: 12px;
+      font-weight: 800;
+      color: var(--accent);
+    }
+
+    .co-price {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-top: 22px;
+      padding: 14px 16px;
+      background: var(--highlight);
+      border: 1.5px solid rgba(22, 163, 74, 0.3);
+      border-radius: var(--radius-sm);
+    }
+
+    .co-price-label {
+      font-size: 0.9rem;
+      font-weight: 700;
+      color: var(--text-main);
+    }
+
+    .co-price-value {
+      font-size: 1.4rem;
+      font-weight: 800;
+      color: var(--accent);
+      white-space: nowrap;
+    }
+
+    .co-price-only {
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--text-muted);
+    }
+
+    /* Bundle-not-available popup */
+    .nd-modal-sm {
+      max-width: 420px;
+    }
+
+    .bu-msg {
+      margin: 0;
+      font-size: 0.95rem;
+      line-height: 1.65;
+      color: var(--text-main);
+    }
+
     @media (max-width: 640px) {
+      .nd-modal-sm {
+        max-width: none;
+      }
+
       .nd-overlay {
         align-items: flex-end;
         padding: 0;
@@ -974,25 +1048,25 @@
             <div class="course-item">
               <span class="course-name"><span class="course-code">SE-111</span> — Computer Fundamentals</span>
               <button type="button" class="course-buy-btn notes-details-btn" data-code="SE-111"
-                data-name="Computer Fundamentals">See Notes Details</button>
+                data-name="Computer Fundamentals">Course Details</button>
             </div>
             <div class="course-item">
               <span class="course-name"><span class="course-code">SE-113</span> — Introduction to Software
                 Engineering</span>
               <button type="button" class="course-buy-btn notes-details-btn" data-code="SE-113"
-                data-name="Introduction to Software Engineering">See Notes Details</button>
+                data-name="Introduction to Software Engineering">Course Details</button>
             </div>
             <div class="course-item">
               <span class="course-name"><span class="course-code">ENG-101</span> — English Reading, Writing Skills
                 &amp;
                 Public Speaking</span>
               <button type="button" class="course-buy-btn notes-details-btn" data-code="ENG-101"
-                data-name="English Reading, Writing Skills &amp; Public Speaking">See Notes Details</button>
+                data-name="English Reading, Writing Skills &amp; Public Speaking">Course Details</button>
             </div>
             <div class="course-item">
               <span class="course-name"><span class="course-code">BNS-101</span> — Bangladesh Studies</span>
               <button type="button" class="course-buy-btn notes-details-btn" data-code="BNS-101"
-                data-name="Bangladesh Studies">See Notes Details</button>
+                data-name="Bangladesh Studies">Course Details</button>
             </div>
           </div>
         </div>
@@ -1013,13 +1087,13 @@
               <span class="course-name"><span class="course-code">MAT-101</span> — Math-I: Calculus &amp;
                 Geometry</span>
               <button type="button" class="course-buy-btn notes-details-btn" data-code="MAT-101"
-                data-name="Math-I: Calculus &amp; Geometry">See Notes Details</button>
+                data-name="Math-I: Calculus &amp; Geometry">Course Details</button>
             </div>
             <!--
             <div class="course-item">
               <span class="course-name"><span class="course-code">SE-121</span> — Structured Programming</span>
               <button type="button" class="course-buy-btn notes-details-btn" data-code="SE-121"
-                data-name="Structured Programming">See Notes Details</button>
+                data-name="Structured Programming">Course Details</button>
             </div> 
             -->
             <div class="course-item">
@@ -1027,7 +1101,7 @@
                 Electromagnetism
                 &amp; Waves</span>
               <button type="button" class="course-buy-btn notes-details-btn" data-code="PHY-101"
-                data-name="Physics: Mechanics, Electromagnetism &amp; Waves">See Notes Details</button>
+                data-name="Physics: Mechanics, Electromagnetism &amp; Waves">Course Details</button>
             </div>
           </div>
 
@@ -1053,24 +1127,24 @@
               <span class="course-name"><span class="course-code">SE-213</span> — Digital Electronics &amp; Logic
                 Design</span>
               <button type="button" class="course-buy-btn notes-details-btn" data-code="SE-213"
-                data-name="Digital Electronics &amp; Logic Design">See Notes Details</button>
+                data-name="Digital Electronics &amp; Logic Design">Course Details</button>
             </div> -->
             <div class="course-item">
               <span class="course-name"><span class="course-code">SE-123</span> — Discrete Mathematics</span>
               <button type="button" class="course-buy-btn notes-details-btn" data-code="SE-123"
-                data-name="Discrete Mathematics">See Notes Details</button>
+                data-name="Discrete Mathematics">Course Details</button>
             </div>
             <div class="course-item">
               <span class="course-name"><span class="course-code">MAT-102</span> — Math-II: Linear Algebra &amp;
                 Fourier
                 Analysis</span>
               <button type="button" class="course-buy-btn notes-details-btn" data-code="MAT-102"
-                data-name="Math-II: Linear Algebra &amp; Fourier Analysis">See Notes Details</button>
+                data-name="Math-II: Linear Algebra &amp; Fourier Analysis">Course Details</button>
             </div>
             <div class="course-item">
               <span class="course-name"><span class="course-code">SE-131</span> — Data Structure</span>
               <button type="button" class="course-buy-btn notes-details-btn" data-code="SE-131"
-                data-name="Data Structure">See Notes Details</button>
+                data-name="Data Structure">Course Details</button>
             </div>
           </div>
 
@@ -1080,8 +1154,8 @@
           </ul>
         </div>
 
-        <!-- Semester 4 -->
-        <div class="semester-card">
+        <!-- Semester 4 (keeps its original bundle + details popups; do not change) -->
+        <div class="semester-card" data-keep-original-offer>
           <div class="semester-card-title">4th Semester</div>
           <span class="semester-card-tag">2 courses available</span>
 
@@ -1142,18 +1216,18 @@
                 Statistics
                 in Software Engineering</span>
               <button type="button" class="course-buy-btn notes-details-btn" data-code="STA-135 / STA-101"
-                data-name="Probability &amp; Statistics in Software Engineering">See Notes Details</button>
+                data-name="Probability &amp; Statistics in Software Engineering">Course Details</button>
             </div>
             <div class="course-item">
               <span class="course-name"><span class="course-code">SE-214</span> — Algorithms Design &amp;
                 Analysis</span>
               <button type="button" class="course-buy-btn notes-details-btn" data-code="SE-214"
-                data-name="Algorithms Design &amp; Analysis">See Notes Details</button>
+                data-name="Algorithms Design &amp; Analysis">Course Details</button>
             </div>
             <div class="course-item">
               <span class="course-name"><span class="course-code">SE-216</span> — Object Oriented Programming</span>
               <button type="button" class="course-buy-btn notes-details-btn" data-code="SE-216"
-                data-name="Object Oriented Programming">See Notes Details</button>
+                data-name="Object Oriented Programming">Course Details</button>
             </div>
           </div>
         </div>
@@ -1175,27 +1249,27 @@
                 Statistics
                 in Software Engineering</span>
               <button type="button" class="course-buy-btn notes-details-btn" data-code="STA-135 / STA-101"
-                data-name="Probability &amp; Statistics in Software Engineering">See Notes Details</button>
+                data-name="Probability &amp; Statistics in Software Engineering">Course Details</button>
             </div>
             <div class="course-item">
               <span class="course-name"><span class="course-code">SE-232</span> — Operating System &amp; System
                 Programming</span>
               <button type="button" class="course-buy-btn notes-details-btn" data-code="SE-232"
-                data-name="Operating System &amp; System Programming">See Notes Details</button>
+                data-name="Operating System &amp; System Programming">Course Details</button>
             </div>
             <!--
             <div class="course-item">
               <span class="course-name"><span class="course-code">SE-231</span> — System Analysis &amp; Design Capstone
                 Project</span>
               <button type="button" class="course-buy-btn notes-details-btn" data-code="SE-231"
-                data-name="System Analysis &amp; Design Capstone Project">See Notes Details</button>
+                data-name="System Analysis &amp; Design Capstone Project">Course Details</button>
             </div>
             -->
             <div class="course-item">
               <span class="course-name"><span class="course-code">SE-235</span> — Desktop &amp; Web
                 Programming</span>
               <button type="button" class="course-buy-btn notes-details-btn" data-code="SE-235"
-                data-name="Desktop &amp; Web Programming">See Notes Details</button>
+                data-name="Desktop &amp; Web Programming">Course Details</button>
             </div>
           </div>
 
@@ -1396,6 +1470,66 @@
     </div>
   </div>
 
+  <!-- Course details popup (all semesters except 4th): Final Exam notes, ৳45 -->
+  <div class="nd-overlay" id="courseOfferOverlay" aria-hidden="true">
+    <div class="nd-modal" role="dialog" aria-modal="true" aria-labelledby="coTitle">
+      <button type="button" class="nd-close" id="coClose" aria-label="Close course details">&times;</button>
+
+      <div class="nd-head">
+        <span class="nd-code" id="coCode"></span>
+        <h2 class="nd-title" id="coTitle"></h2>
+      </div>
+
+      <div class="nd-body">
+        <section class="nd-section">
+          <h3>What's Included with This Course?</h3>
+          <p>By purchasing this course, you will receive <span class="nd-hl">immediate access</span> to the existing
+            course notes, prepared based on my own learning experience.</p>
+        </section>
+
+        <section class="nd-section">
+          <h3>What's Included:</h3>
+          <ul class="co-list">
+            <li>Course notes for the Final Exam.</li>
+          </ul>
+        </section>
+
+        <div class="co-price">
+          <span class="co-price-label">Price</span>
+          <span class="co-price-value">৳45 <span class="co-price-only">only</span></span>
+        </div>
+      </div>
+
+      <div class="nd-foot">
+        <a class="nd-buy"
+          href="https://docs.google.com/forms/d/e/1FAIpQLSfTnT2eiEQc0FDQZymRrbwFgOKITPjCczdvUhdKSt1H8xUwJQ/viewform?usp=publish-editor"
+          target="_blank" rel="noopener noreferrer">Purchase This Course · ৳45</a>
+        <p class="nd-foot-note">You are purchasing <strong id="coBuyName"></strong> only.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Full bundle not available popup (all semesters except 4th) -->
+  <div class="nd-overlay" id="bundleUnavailableOverlay" aria-hidden="true">
+    <div class="nd-modal nd-modal-sm" role="dialog" aria-modal="true" aria-labelledby="buTitle">
+      <button type="button" class="nd-close" id="buClose" aria-label="Close">&times;</button>
+
+      <div class="nd-head">
+        <span class="nd-code" id="buSem"></span>
+        <h2 class="nd-title" id="buTitle">Full Bundle of Notes</h2>
+      </div>
+
+      <div class="nd-body">
+        <p class="bu-msg">This bundle is not available for this semester. However, you can purchase individual course
+          notes separately.</p>
+      </div>
+
+      <div class="nd-foot">
+        <button type="button" class="nd-buy" id="buShowCourses">View Individual Course Notes</button>
+      </div>
+    </div>
+  </div>
+
   <!-- Mid Notes popup -->
   <div class="locked-modal-overlay" id="lockedModalOverlay">
     <div class="locked-modal">
@@ -1493,6 +1627,16 @@
       root.appendChild(bundleOverlay);
       root.appendChild(lockedOverlay);
 
+      var offerOverlay = document.getElementById('courseOfferOverlay');
+      var bundleNaOverlay = document.getElementById('bundleUnavailableOverlay');
+      root.appendChild(offerOverlay);
+      root.appendChild(bundleNaOverlay);
+
+      // Only the 4th semester keeps the original bundle + details popups
+      function keepsOriginalOffer(el) {
+        return el.closest('.semester-card').hasAttribute('data-keep-original-offer');
+      }
+
       var lastTrigger = null;
 
       function plural(n) {
@@ -1531,6 +1675,10 @@
       document.querySelectorAll('.notes-details-btn').forEach(function (btn) {
         btn.addEventListener('click', function () {
           lastTrigger = btn;
+          if (!keepsOriginalOffer(btn)) {
+            openCourseOffer(btn);
+            return;
+          }
           ndCode.textContent = btn.dataset.code;
           ndTitle.textContent = btn.dataset.name;
           ndBuyName.textContent = btn.dataset.code + ' — ' + btn.dataset.name;
@@ -1582,6 +1730,11 @@
           var card = btn.closest('.semester-card');
           var sem = card.querySelector('.semester-card-title').textContent.trim();
 
+          if (!keepsOriginalOffer(btn)) {
+            openBundleUnavailable(card, sem);
+            return;
+          }
+
           // courses that have notes (commented-out ones are ignored automatically)
           var withNotes = card.querySelectorAll('.notes-details-btn');
           // courses in the bundle for free resources only
@@ -1623,11 +1776,61 @@
         if (e.target === bundleOverlay) closeOverlay(bundleOverlay);
       });
 
+      /* ---------- Course details popup (৳45, all semesters except 4th) ---------- */
+      var coClose = document.getElementById('coClose');
+      var coCode = document.getElementById('coCode');
+      var coTitle = document.getElementById('coTitle');
+      var coBuyName = document.getElementById('coBuyName');
+
+      function openCourseOffer(btn) {
+        coCode.textContent = btn.dataset.code;
+        coTitle.textContent = btn.dataset.name;
+        coBuyName.textContent = btn.dataset.code + ' — ' + btn.dataset.name;
+        offerOverlay.querySelector('.nd-body').scrollTop = 0;
+        openOverlay(offerOverlay);
+        coClose.focus();
+      }
+
+      coClose.addEventListener('click', function () { closeOverlay(offerOverlay); });
+      offerOverlay.addEventListener('click', function (e) {
+        if (e.target === offerOverlay) closeOverlay(offerOverlay);
+      });
+
+      /* ---------- Bundle not available popup (all semesters except 4th) ---------- */
+      var buClose = document.getElementById('buClose');
+      var buSem = document.getElementById('buSem');
+      var buShowCourses = document.getElementById('buShowCourses');
+      var buCard = null;
+
+      function openBundleUnavailable(card, sem) {
+        buCard = card;
+        buSem.textContent = sem;
+        openOverlay(bundleNaOverlay);
+        buClose.focus();
+      }
+
+      buClose.addEventListener('click', function () { closeOverlay(bundleNaOverlay); });
+      bundleNaOverlay.addEventListener('click', function (e) {
+        if (e.target === bundleNaOverlay) closeOverlay(bundleNaOverlay);
+      });
+
+      // "View Individual Course Notes": close popup and expand that semester's course list
+      buShowCourses.addEventListener('click', function () {
+        var toggle = buCard && buCard.querySelector('.toggle-courses-btn');
+        lastTrigger = toggle;
+        closeOverlay(bundleNaOverlay);
+        if (toggle && toggle.getAttribute('aria-expanded') !== 'true') toggle.click();
+      });
+
       /* ---------- Esc closes whichever popup is open ---------- */
       document.addEventListener('keydown', function (e) {
         if (e.key !== 'Escape') return;
         if (lockedOverlay.classList.contains('active')) {
           lockedOverlay.classList.remove('active');
+        } else if (offerOverlay.classList.contains('open')) {
+          closeOverlay(offerOverlay);
+        } else if (bundleNaOverlay.classList.contains('open')) {
+          closeOverlay(bundleNaOverlay);
         } else if (bundleOverlay.classList.contains('open')) {
           closeOverlay(bundleOverlay);
         } else if (detailsOverlay.classList.contains('open')) {
