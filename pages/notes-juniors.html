@@ -1290,63 +1290,6 @@
       </div>
     </div>
 
-    <!-- ============================================================
-         MISSING COURSE REQUEST + NEED A TUTOR (shared, always visible)
-         ============================================================ -->
-    <section style="margin-top:48px;">
-      <div class="request-grid">
-
-        <!-- Missing Course Request -->
-        <div class="section-block request-card">
-          <div class="section-block-title">Can't find your course?</div>
-          <p style="font-size:0.85rem; color:var(--text-muted); margin-bottom:16px;">Tell me which course you need and
-            why - I'll try to add it.</p>
-
-          <form id="missingCourseForm"
-            action="https://docs.google.com/forms/d/e/1FAIpQLSfjFtOK_F338sW6e2e6yRyWOgRAcIfEcCP0Pn9r2RcGsvklZg/formResponse"
-            method="POST" target="hidden_iframe" class="request-form">
-
-            <input type="text" name="entry.560950120" placeholder="Which course do you need? (code + name)" required
-              style="padding:10px 14px; border-radius:var(--radius-sm); border:1.5px solid var(--border); background:var(--surface); color:var(--text-main); font-family:var(--font-body);" />
-
-            <textarea name="entry.1934792683" placeholder="Why do you need it?" required rows="3"
-              style="padding:10px 14px; border-radius:var(--radius-sm); border:1.5px solid var(--border); background:var(--surface); color:var(--text-main); font-family:var(--font-body); resize:vertical; flex:1;"></textarea>
-
-            <button type="submit" class="buy-all-btn" style="border:none; cursor:pointer; margin-top:auto;">Submit
-              request</button>
-          </form>
-          <p id="missingCourseThanks"
-            style="display:none; margin-top:12px; font-size:0.85rem; color:var(--accent); font-weight:700;">Thanks! Your
-            request has been sent.</p>
-        </div>
-
-        <!-- Need a Tutor (I teach this myself) -->
-        <div class="section-block request-card">
-          <div class="section-block-title">Need a tutor?</div>
-          <p style="font-size:0.85rem; color:var(--text-muted); margin-bottom:16px;">Fill this out and I'll reach out to
-            you directly.</p>
-
-          <form id="tutorForm"
-            action="https://docs.google.com/forms/d/e/1FAIpQLSdbGALTbgts3LVavO1AD1rdikba-st62jbB5FegJPZ56DVTuQ/formResponse"
-            method="POST" target="hidden_iframe" class="request-form">
-
-            <input type="text" name="entry.256195603" placeholder="Your name" required
-              style="padding:10px 14px; border-radius:var(--radius-sm); border:1.5px solid var(--border); background:var(--surface); color:var(--text-main); font-family:var(--font-body);" />
-
-            <input type="text" name="entry.1468396561" placeholder="Which course do you need a tutor for?" required
-              style="padding:10px 14px; border-radius:var(--radius-sm); border:1.5px solid var(--border); background:var(--surface); color:var(--text-main); font-family:var(--font-body);" />
-
-            <button type="submit" class="buy-all-btn" style="border:none; cursor:pointer; margin-top:auto;">Submit
-              request</button>
-          </form>
-          <p id="tutorThanks"
-            style="display:none; margin-top:12px; font-size:0.85rem; color:var(--accent); font-weight:700;">Thanks! Your
-            request has been sent.</p>
-        </div>
-
-      </div>
-    </section>
-
   </main>
 
   <!-- Notes details popup (individual course) -->
@@ -1545,9 +1488,6 @@
         target="_blank">@Esrat-Jhahann</a></p>
   </footer>
 
-  <!-- hidden iframe so both request forms submit without leaving the page -->
-  <iframe name="hidden_iframe" id="hidden_iframe" style="display:none;"></iframe>
-
   <script src="../script.js"></script>
 
   <!-- Mid / Final choice: Mid opens the popup, Final shows the semester panel -->
@@ -1573,23 +1513,6 @@
 
         document.getElementById('panel-' + term).scrollIntoView({ behavior: 'smooth', block: 'start' });
       });
-    });
-  </script>
-
-  <!-- Missing course + tutor request thank-you messages -->
-  <script>
-    document.getElementById('missingCourseForm').addEventListener('submit', function () {
-      document.getElementById('missingCourseThanks').style.display = 'block';
-      setTimeout(function () {
-        document.getElementById('missingCourseForm').reset();
-      }, 600);
-    });
-
-    document.getElementById('tutorForm').addEventListener('submit', function () {
-      document.getElementById('tutorThanks').style.display = 'block';
-      setTimeout(function () {
-        document.getElementById('tutorForm').reset();
-      }, 600);
     });
   </script>
 
