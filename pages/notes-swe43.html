@@ -327,36 +327,14 @@
               updates.</p>
             <div class="drive-list" style="margin-top: 4px;">
 
-              <!-- <div class="drive-card">
-                <div class="drive-card-left">
-                  <div>
-                    <div class="drive-label">Data Communication & Computer Networking</div>
-                  </div>
-                </div>
-                <a href="https://docs.google.com/forms/d/e/1FAIpQLScsG6sl5SE215tSCPEcabgTcLVzYoaWMo0zQUa7mzRMaLa6AA/viewform?usp=dialog"
-                  target="_blank" rel="noopener noreferrer" class="drive-btn">Purchase this course </a>
-              </div> -->
-
               <div class="drive-card">
                 <div class="drive-card-left">
                   <div>
                     <div class="drive-label">Data Communication & Computer Networking</div>
                   </div>
                 </div>
-                <button type="button" class="drive-btn" style="border:none; cursor:pointer; font-family:inherit;"
-                  onclick="this.textContent='Coming soon'; this.disabled=true; this.style.opacity='0.6'; this.style.cursor='not-allowed';">Purchase
-                  this course</button>
+                <a href="https://docs.google.com/forms/d/e/1FAIpQLSfSuS8DBKDSsTeYZpi2nG4hEnboOmpuHDtoMYYpmA6un8b7EA/viewform?usp=publish-editor" target="_blank" rel="noopener noreferrer" class="drive-btn">Purchase this course</a>
               </div>
-
-              <!-- <div class="drive-card">
-                <div class="drive-card-left">
-                  <div>
-                    <div class="drive-label">Software Quality Assurance & Testing</div>
-                  </div>
-                </div>
-                <a href="https://docs.google.com/forms/d/e/1FAIpQLScsG6sl5SE215tSCPEcabgTcLVzYoaWMo0zQUa7mzRMaLa6AA/viewform?usp=dialog"
-                  target="_blank" rel="noopener noreferrer" class="drive-btn">Purchase this course </a>
-              </div> -->
 
               <div class="drive-card">
                 <div class="drive-card-left">
@@ -364,20 +342,8 @@
                     <div class="drive-label">Software Quality Assurance & Testing</div>
                   </div>
                 </div>
-                <button type="button" class="drive-btn" style="border:none; cursor:pointer; font-family:inherit;"
-                  onclick="this.textContent='Coming soon'; this.disabled=true; this.style.opacity='0.6'; this.style.cursor='not-allowed';">Purchase
-                  this course</button>
+                <a href="https://docs.google.com/forms/d/e/1FAIpQLSfSuS8DBKDSsTeYZpi2nG4hEnboOmpuHDtoMYYpmA6un8b7EA/viewform?usp=publish-editor" target="_blank" rel="noopener noreferrer" class="drive-btn">Purchase this course</a>
               </div>
-
-              <!-- <div class="drive-card">
-                <div class="drive-card-left">
-                  <div>
-                    <div class="drive-label">Business Analysis & Communication</div>
-                  </div>
-                </div>
-                <a href="https://docs.google.com/forms/d/e/1FAIpQLScsG6sl5SE215tSCPEcabgTcLVzYoaWMo0zQUa7mzRMaLa6AA/viewform?usp=dialog"
-                  target="_blank" rel="noopener noreferrer" class="drive-btn">Purchase this course </a>
-              </div> -->
 
               <div class="drive-card">
                 <div class="drive-card-left">
@@ -385,20 +351,8 @@
                     <div class="drive-label">Business Analysis & Communication</div>
                   </div>
                 </div>
-                <button type="button" class="drive-btn" style="border:none; cursor:pointer; font-family:inherit;"
-                  onclick="this.textContent='Coming soon'; this.disabled=true; this.style.opacity='0.6'; this.style.cursor='not-allowed';">Purchase
-                  this course</button>
+                <a href="https://docs.google.com/forms/d/e/1FAIpQLSfSuS8DBKDSsTeYZpi2nG4hEnboOmpuHDtoMYYpmA6un8b7EA/viewform?usp=publish-editor" target="_blank" rel="noopener noreferrer" class="drive-btn">Purchase this course</a>
               </div>
-
-              <!-- <div class="drive-card">
-                <div class="drive-card-left">
-                  <div>
-                    <div class="drive-label">Design Pattern</div>
-                  </div>
-                </div>
-                <a href="https://docs.google.com/forms/d/e/1FAIpQLScsG6sl5SE215tSCPEcabgTcLVzYoaWMo0zQUa7mzRMaLa6AA/viewform?usp=dialog"
-                  target="_blank" rel="noopener noreferrer" class="drive-btn">Purchase this course </a>
-              </div> -->
 
               <div class="drive-card">
                 <div class="drive-card-left">
@@ -406,9 +360,7 @@
                     <div class="drive-label">Design Pattern</div>
                   </div>
                 </div>
-                <button type="button" class="drive-btn" style="border:none; cursor:pointer; font-family:inherit;"
-                  onclick="this.textContent='Coming soon'; this.disabled=true; this.style.opacity='0.6'; this.style.cursor='not-allowed';">Purchase
-                  this course</button>
+                <a href="https://docs.google.com/forms/d/e/1FAIpQLSfSuS8DBKDSsTeYZpi2nG4hEnboOmpuHDtoMYYpmA6un8b7EA/viewform?usp=publish-editor" target="_blank" rel="noopener noreferrer" class="drive-btn">Purchase this course</a>
               </div>
 
             </div>
@@ -514,6 +466,9 @@
       //  Nothing yet -> leave it empty like this: []
       //  keywords    = extra words people can type to find the course
       // =====================================================================
+      var MID_AVAILABLE = false;   // set to true when Mid notes are open again
+      var MID_MSG = 'Not available for Fall-26';
+
       var COURSES = [
         {
           name: 'Data Communication & Computer Networking',
@@ -567,18 +522,18 @@
       }
 
       function haystack(c) {
-        return [c.name, c.code, c.keywords].concat(c.mid, c.final).join(' ').toLowerCase();
+        return [c.name, c.code, c.keywords].concat(MID_AVAILABLE ? c.mid : [], c.final).join(' ').toLowerCase();
       }
 
       function countNotes(list) {
         return list.filter(function (n) { return n.charAt(0) !== '#'; }).length;
       }
 
-      function block(label, notes) {
+      function block(label, notes, emptyMsg) {
         var wrap = el('div');
         wrap.appendChild(el('div', 'sr-term', label));
         if (notes.length === 0) {
-          wrap.appendChild(el('div', 'sr-empty', 'Nothing uploaded yet'));
+          wrap.appendChild(el('div', 'sr-empty', emptyMsg || 'Nothing uploaded yet'));
         } else {
           var ul = el('ul', 'sr-list');
           var inGroup = false;
@@ -596,7 +551,7 @@
       }
 
       function card(c) {
-        var count = countNotes(c.mid) + countNotes(c.final);
+        var count = (MID_AVAILABLE ? countNotes(c.mid) : 0) + countNotes(c.final);
         var box = el('div', 'sr-card');
         var head = el('div', 'sr-head');
         var left = el('div');
@@ -606,7 +561,7 @@
         head.appendChild(el('span', 'sr-badge' + (count ? ' on' : ''),
           count ? count + (count === 1 ? ' note available' : ' notes available') : 'Coming soon'));
         box.appendChild(head);
-        box.appendChild(block('Mid Notes', c.mid));
+        box.appendChild(MID_AVAILABLE ? block('Mid Notes', c.mid) : block('Mid Notes', [], MID_MSG));
         box.appendChild(block('Final Notes', c.final));
         return box;
       }
